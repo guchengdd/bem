@@ -122,7 +122,7 @@ class BackWPup_Page_Editjob {
 				), true ) ? $_POST['archiveformat'] : '.zip';
 				BackWPup_Option::update( $jobid, 'archiveformat', $archiveformat );
 
-				BackWPup_Option::update( $jobid, 'archivename', BackWPup_Job::sanitize_file_name( BackWPup_Option::normalize_archive_name( $_POST['archivename'], $jobid, false ) ) );
+				BackWPup_Option::update( $jobid, 'archivename', BackWPup_Job::sanitize_file_name( $_POST['archivename'] ) );
 				break;
 			case 'cron':
 				$activetype = in_array( $_POST['activetype'], array(
@@ -313,7 +313,9 @@ class BackWPup_Page_Editjob {
 		}
 		else {
 			//generate jobid if not exists
-			$jobid = BackWPup_Option::next_job_id();
+			$newjobid = BackWPup_Option::get_job_ids();
+			sort( $newjobid );
+			$jobid = end( $newjobid ) + 1;
 		}
 
 		$destinations = BackWPup::get_registered_destinations();
@@ -435,11 +437,12 @@ class BackWPup_Page_Editjob {
 						<tr class="nosync">
 							<th scope="row"><label for="archivename"><?php esc_html_e( 'Archive name', 'backwpup' ) ?></label></th>
 							<td>
-								<input name="archivename" type="text" id="archivename" placeholder="%Y-%m-%d_%H-%i-%s_%hash%" value="<?php echo esc_attr( BackWPup_Option::get( $jobid, 'archivenamenohash' ) );?>" class="regular-text code" />
-								<p><?php _e( '<em>Note</em>: In order for backup file tracking to work, %hash% must be included anywhere in the archive name.', 'backwpup' ) ?></p>
+								<input name="archivename" type="text" id="archivename" placeholder="backwpup_%Y-%m-%d_%H-%i-%s" value="<?php echo esc_attr(BackWPup_Option::get( $jobid, 'archivename' ));?>" class="regular-text code" />
 								<?php
-								$archivename = BackWPup_Option::substitute_date_vars(
-									BackWPup_Option::get( $jobid, 'archivenamenohash' ) );
+								$current_time = current_time( 'timestamp' );
+								$datevars    = array( '%d', '%j', '%m', '%n', '%Y', '%y', '%a', '%A', '%B', '%g', '%G', '%h', '%H', '%i', '%s' );
+								$datevalues  = array( date( 'd', $current_time ), date( 'j', $current_time ), date( 'm', $current_time ), date( 'n', $current_time ), date( 'Y', $current_time ), date( 'y', $current_time ), date( 'a', $current_time ), date( 'A', $current_time ), date( 'B', $current_time ), date( 'g', $current_time ), date( 'G', $current_time ), date( 'h', $current_time ), date( 'H', $current_time ), date( 'i', $current_time ), date( 's', $current_time ) );
+								$archivename = str_replace( $datevars, $datevalues, BackWPup_Job::sanitize_file_name( BackWPup_Option::get( $jobid, 'archivename' ) ) );
 								echo '<p>Preview: <code><span id="archivefilename">' . esc_attr( $archivename ) . '</span><span id="archiveformat">' . esc_attr( BackWPup_Option::get( $jobid, 'archiveformat' ) ) . '</span></code></p>';
 								echo '<p class="description">';
 								echo "<strong>" . esc_attr__( 'Replacement patterns:', 'backwpup' ) . "</strong><br />";

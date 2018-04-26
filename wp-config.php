@@ -18,7 +18,7 @@
 
 // ** MySQL Einstellungen - diese Angaben bekommst du von deinem Webhoster. ** //
 /** Ersetze database_name_here mit dem Namen der Datenbank, die du verwenden möchtest. */
-define('DB_NAME', 'bem_wp');
+define('DB_NAME', 'bem_wordpress');
 
 /** Ersetze username_here mit deinem MySQL-Datenbank-Benutzernamen */
 define('DB_USER', 'wordpress');
@@ -34,8 +34,8 @@ define('DB_CHARSET', '');
 
 /** Der collate type sollte nicht geändert werden */
 define('DB_COLLATE', '');
-define('WP_HOME', 'http://127.0.0.1/bem'); 
-define('WP_SITEURL', 'http://127.0.0.1/bem');
+define('WP_HOME', 'http://127.0.0.1/bem_old'); 
+define('WP_SITEURL', 'http://127.0.0.1/bem_old');
 
 define( 'WP_MEMORY_LIMIT', '128M' );
 define('WP_POST_REVISIONS', 3);

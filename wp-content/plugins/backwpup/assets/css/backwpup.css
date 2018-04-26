@@ -159,6 +159,7 @@
 #backwpup-page .backwpup-warning {
 	border-left: 4px solid #ffba00; /* UI color .update-nag */
 }
+
 @media screen and (min-width: 720px) {
 	#backwpup-page .backwpup-floated-postbox {
 		float: left;
