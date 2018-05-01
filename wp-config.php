@@ -34,8 +34,8 @@ define('DB_CHARSET', '');
 
 /** Der collate type sollte nicht geändert werden */
 define('DB_COLLATE', '');
-define('WP_HOME', 'http://127.0.0.1/bem_old'); 
-define('WP_SITEURL', 'http://127.0.0.1/bem_old');
+define('WP_HOME', 'http://127.0.0.1/bem'); 
+define('WP_SITEURL', 'http://127.0.0.1/bem');
 
 define( 'WP_MEMORY_LIMIT', '128M' );
 define('WP_POST_REVISIONS', 3);

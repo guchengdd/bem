@@ -1583,3 +1583,13 @@ function avada_layerslider_ready() {
 	}
 }
 add_action( 'layerslider_ready', 'avada_layerslider_ready' );
+
+add_action( 'wp_enqueue_scripts', 'load_old_jquery_fix', 100 );
+ 
+function load_old_jquery_fix() {
+    if ( ! is_admin() ) {
+        wp_deregister_script( 'jquery' );
+        wp_register_script( 'jquery', ( "//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ), false, '1.11.3' );
+        wp_enqueue_script( 'jquery' );
+    }
+}
